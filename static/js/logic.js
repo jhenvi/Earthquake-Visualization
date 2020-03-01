@@ -85,10 +85,10 @@ function createMap(earthquakes) {
     accessToken: API_KEY
   });
 
-  // Create the faultline layer
+  // Create  layer
   var faultLine = new L.LayerGroup();
   
-  // Define a baseMaps object to hold our base layers
+  // Define a baseMaps object for base layers
   var baseMaps = {
     "Outdoor Map": outdoorsmap,
     "Greyscale Map": grayscalemap,
@@ -101,16 +101,16 @@ function createMap(earthquakes) {
     FaultLines: faultLine
   };
 
-  // Create our map, giving it the street map and earthquakes layers to display on load
+  // Create  the map
   var myMap = L.map("map", {
     center: [
-      35, -98
+      43.6532, -79.3832
     ],
     zoom: 6,
     layers: [outdoorsmap, earthquakes, faultLine]
   });
 
-  // Create a layer control // Pass in our baseMaps and overlayMaps // Add the layer control to the map and run to verify
+  // Create a layer control, pass baseMaps and overlayMaps, add a layer control to the map and run to verify
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
@@ -128,7 +128,7 @@ function createMap(earthquakes) {
     }).addTo(faultLine)
   })
 
-  // color function to be used when creating the legend
+  // color function for legend
   function getColor(d) {
     return d > 5  ? '#ff3333' :
            d > 4  ? '#ff6633' :
@@ -144,14 +144,14 @@ function createMap(earthquakes) {
   legend.onAdd = function (map) {
 
       var div = L.DomUtil.create('div', 'info legend'),
-          mags = [0, 1, 2, 3, 4, 5],
+          magnitude = [0, 1, 2, 3, 4, 5],
           labels = [];
 
-      // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < mags.length; i++) {
+      // loop through the density intervals to  generate label, colored square for each interval
+      for (var i = 0; i < magnitude.length; i++) {
           div.innerHTML +=
-              '<i style="background:' + getColor(mags[i] + 1) + '"></i> ' +
-              mags[i] + (mags[i + 1] ? '&ndash;' + mags[i + 1] + '<br>' : '+');
+              '<i style="background:' + getColor(magnitude[i] + 1) + '"></i> ' +
+              magnitude[i] + (magnitude[i + 1] ? '&ndash;' + magnitude[i + 1] + '<br>' : '+');
       }
 
       return div;
