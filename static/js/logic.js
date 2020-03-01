@@ -10,8 +10,8 @@ d3.json(queryUrl, function(data) {
 
 function createFeatures(earthquakeData) {
 
-  // Define a function we want to run once for each feature in the features array
-  // Give each feature a popup describing the place and time of the earthquake
+  // Define a function to run once each feature in the features array
+  // Give each feature a popup with the place and time of the earthquake
   function onEachFeature(feature, layer) {
     layer.bindPopup("<h3>" + feature.properties.place +
       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
@@ -19,7 +19,7 @@ function createFeatures(earthquakeData) {
 
   // Define function to create the circle radius based on the magnitude
   function radiusSize(magnitude) {
-    return magnitude * 20000;
+    return magnitude * 15000;
   }
 
   // Define function to set the circle color based on the magnitude
@@ -101,24 +101,25 @@ function createMap(earthquakes) {
     FaultLines: faultLine
   };
 
-  // Create our map, giving it the streetmap and earthquakes layers to display on load
+  // Create our map, giving it the street map and earthquakes layers to display on load
   var myMap = L.map("map", {
     center: [
-      37.09, -95.71
+      35, -98
     ],
-    zoom: 4,
+    zoom: 6,
     layers: [outdoorsmap, earthquakes, faultLine]
   });
 
-  // Create a layer control // Pass in our baseMaps and overlayMaps // Add the layer control to the map
+  // Create a layer control // Pass in our baseMaps and overlayMaps // Add the layer control to the map and run to verify
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
 
-  // Query to retrieve the faultline data
+  // Retrieve the fault line data
+
   var faultlinequery = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json";
-  
-  // Create the faultlines and add them to the faultline layer
+
+  // Create the fault lines and add them to the fault line layer with d3.json
   d3.json(faultlinequery, function(data) {
     L.geoJSON(data, {
       style: function() {
@@ -129,7 +130,7 @@ function createMap(earthquakes) {
 
   // color function to be used when creating the legend
   function getColor(d) {
-    return d > 5 ? '#ff3333' :
+    return d > 5  ? '#ff3333' :
            d > 4  ? '#ff6633' :
            d > 3  ? '#ff9933' :
            d > 2  ? '#ffcc33' :
