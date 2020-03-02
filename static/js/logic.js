@@ -19,7 +19,7 @@ function createFeatures(earthquakeData) {
 
   // Define function to create the circle radius based on the magnitude
   function radiusSize(magnitude) {
-    return magnitude * 15000;
+    return magnitude * 20000;
   }
 
   // Define function to set the circle color based on the magnitude
@@ -104,9 +104,9 @@ function createMap(earthquakes) {
   // Create  the map
   var myMap = L.map("map", {
     center: [
-      43.6532, -79.3832
+      49.28, -123.12
     ],
-    zoom: 6,
+    zoom: 2,
     layers: [outdoorsmap, earthquakes, faultLine]
   });
 
