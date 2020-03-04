@@ -80,14 +80,14 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
       return "#98ee00";
     }
   }
+
+  //Include popups that provide additional information about the earthquake when a marker is clicked.
   // Create radius plotted, add circle marker
-  //Include popups that provide additional information about the 
-  //earthquake when a marker is clicked.
   function getRadius(magnitude) {
     if (magnitude === 0) {
       return 1;
     }
-    return magnitude * 4;
+    return magnitude * 3;
   }
   L.geoJson(data, {
 
