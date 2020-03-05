@@ -12,7 +12,7 @@ var satellite = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.pn
   id: "mapbox.streets-satellite",
   accessToken: API_KEY
 });
-var graymap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+var grayMap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
   attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, Imagery © <a href='https://www.mapbox.com/'>Mapbox</a>",
   maxZoom: 15,
   id: "mapbox.light",
@@ -24,22 +24,22 @@ var map = L.map("map", {
     49.28, -123.12
   ],
   zoom: 2.5,
-  layers: [graymap, satellite, outdoors]
+  layers: [grayMap, satellite, outdoors]
 });
-graymap.addTo(map);
-var tectonicplates = new L.LayerGroup();
+grayMap.addTo(map);
+var tectonicPlates = new L.LayerGroup();
 var earthquakes = new L.LayerGroup();
 
-//Add a number of base maps to choose from as 
-//well as separate out our two different data sets 
+//Add a number of base maps to choose from as
+//well as separate out our two different data sets
 //into overlays that can be turned on and off independently.
 var baseMaps = {
   Satellite: satellite,
-  Grayscale: graymap,
+  Grayscale: grayMap,
   Outdoors: outdoors
 };
 var overlays = {
-  "Tectonic Plates": tectonicplates,
+  "Tectonic Plates": tectonicPlates,
   Earthquakes: earthquakes
 };
 // Add control to the map to change layers
@@ -48,7 +48,7 @@ L
   .layers(baseMaps, overlays)
   .addTo(map);
 //Your data markers should reflect the magnitude of the earthquake in their size and color.
-// add d3.geoJSON data and adding colors
+// add d3.geoJSON data and add colors
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", function(data) {
 
   function styleInfo(feature) {
@@ -128,13 +128,13 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
   legend.addTo(map);
   //Data on tectonic plates can be found at https://github.com/fraxen/tectonicplates.
   d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json",
-    function(platedata) {
-      L.geoJson(platedata, {
+    function(plateData) {
+      L.geoJson(plateData, {
         color: "orange",
         weight: 2
       })
-      .addTo(tectonicplates);
-      tectonicplates.addTo(map);
+      .addTo(tectonicPlates);
+      tectonicPlates.addTo(map);
     });
 });
 
